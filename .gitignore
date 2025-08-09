@@ -1,0 +1,55 @@
+# Node modules
+node_modules/
+
+# Vite build output
+dist/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Optional: Mac system files
+.AppleDouble
+.LSOverride
+
+# Optional: Windows system files
+ehthumbs.db
+Desktop.ini
+
+# Optional: Linux trash folder
+.Trash-*
+
+# Optional: Vite cache (if used)
+.cache/
+
+# Optional: Coverage reports
+coverage/
+
+# Optional: TypeScript build artifacts
+*.tsbuildinfo
+
+# Optional: Parcel cache (if experimenting)
+.parcel-cache/
+
+# Optional: Storybook build
+storybook-static/
+
+# Optional: JetBrains IDEs
+*.iml
+out/
