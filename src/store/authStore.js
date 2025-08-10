@@ -4,11 +4,11 @@ import axios from "axios";
 // Define API URLs
 const API_URL =
   import.meta.env.MODE === "development"
-    ? "http://localhost:5000/api/auth"
+    ? "https://mentplus-backend.onrender.com/api/auth"
     : "/api/auth";
 const TEST_API_URL =
   import.meta.env.MODE === "development"
-    ? "http://localhost:5000/api/test"
+    ? "https://mentplus-backend.onrender.com/api/test"
     : "/api/test";
 
 // Set axios to send cookies with every request
@@ -167,7 +167,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       // The new backend endpoint is /api/profile/complete
       const response = await axios.post(
-        "http://localhost:5000/api/profile/complete",
+        "https://mentplus-backend.onrender.com/api/profile/complete",
         profileData
       );
       // Update the main user object in the store with the response from the server
@@ -219,7 +219,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       // The new backend endpoint is /api/sessions/create-group
       const response = await axios.post(
-        "http://localhost:5000/api/sessions/create-group",
+        "https://mentplus-backend.onrender.com/api/sessions/create-group",
         sessionData
       );
       set({ isLoading: false });
@@ -236,7 +236,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/sessions/my-sessions"
+        "https://mentplus-backend.onrender.com/api/sessions/my-sessions"
       );
       set({ isLoading: false });
       return response.data.sessions; // Returns the array of sessions
@@ -251,7 +251,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/contact/submit",
+        "https://mentplus-backend.onrender.com/api/contact/submit",
         formData
       );
       set({ isLoading: false });
@@ -266,7 +266,7 @@ export const useAuthStore = create((set, get) => ({
   getExploreData: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.get("http://localhost:5000/api/explore");
+      const response = await axios.get("https://mentplus-backend.onrender.com/api/explore");
       set({ isLoading: false });
       return response.data; // Returns { success, mentors, sessions }
     } catch (error) {
@@ -282,7 +282,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/payments/create-order",
+        "https://mentplus-backend.onrender.com/api/payments/create-order",
         { mentorId, requestedDateTime }
       ); // <<< Send in body
       set({ isLoading: false });
@@ -300,7 +300,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       console.log("Verifying payment with data:", paymentData);
       const response = await axios.post(
-        "http://localhost:5000/api/payments/verify-payment",
+        "https://mentplus-backend.onrender.com/api/payments/verify-payment",
         paymentData
       );
       set({ isLoading: false });
@@ -318,7 +318,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       // The new backend endpoint is /api/student/save-subjects
       const response = await axios.post(
-        "http://localhost:5000/api/student/save-subjects",
+        "https://mentplus-backend.onrender.com/api/student/save-subjects",
         { subjects }
       );
       // Update the main user object in the store with the response from the server
@@ -340,7 +340,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/student/dashboard"
+        "https://mentplus-backend.onrender.com/api/student/dashboard"
       );
       set({ isLoading: false });
       return response.data; // Returns { success, mentors, myBookings, myGroupSessions, myTransactions }
@@ -356,7 +356,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/mentor/dashboard"
+        "https://mentplus-backend.onrender.com/api/mentor/dashboard"
       );
       set({ isLoading: false });
       // Returns the full payload: { success, bookingRequests, notifications, stats, transactions }
@@ -373,7 +373,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/mentor/bookings/${bookingId}`,
+        `https://mentplus-backend.onrender.com/api/mentor/bookings/${bookingId}`,
         { action }
       );
       set({ isLoading: false });
@@ -389,9 +389,9 @@ export const useAuthStore = create((set, get) => ({
   generateZimToken: async (userID) => {
     try {
       // Example with query param:
-      // const response = await axios.get(`http://localhost:5000/api/chat/token?userID=${userID}`);
+      // const response = await axios.get(`https://mentplus-backend.onrender.com/api/chat/token?userID=${userID}`);
       // Or with headers:
-      const response = await axios.get("http://localhost:5000/api/chat/token", {
+      const response = await axios.get("https://mentplus-backend.onrender.com/api/chat/token", {
         headers: { userID: userID },
       });
       return response.data.token;
@@ -405,7 +405,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/chat/connections"
+        "https://mentplus-backend.onrender.com/api/chat/connections"
       );
       set({ isLoading: false });
       console.log("Chat connections fetched:", response.data.connections);
@@ -422,7 +422,7 @@ export const useAuthStore = create((set, get) => ({
     createGroupSessionOrder: async (sessionId) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axios.post("http://localhost:5000/api/payments/create-group-order", { sessionId });
+            const response = await axios.post("https://mentplus-backend.onrender.com/api/payments/create-group-order", { sessionId });
             set({ isLoading: false });
             return response.data; // Returns { success, order, bookingId }
         } catch (error) {
@@ -434,7 +434,7 @@ export const useAuthStore = create((set, get) => ({
     verifyGroupSessionPayment: async (paymentData) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axios.post("http://localhost:5000/api/payments/verify-group-payment", paymentData);
+            const response = await axios.post("https://mentplus-backend.onrender.com/api/payments/verify-group-payment", paymentData);
             set({ isLoading: false });
             return response.data; // Returns { success, message }
         } catch (error) {
@@ -447,7 +447,7 @@ export const useAuthStore = create((set, get) => ({
     getAvailableGroupSessions: async () => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axios.get("http://localhost:5000/api/sessions/available-group");
+            const response = await axios.get("https://mentplus-backend.onrender.com/api/sessions/available-group");
             set({ isLoading: false });
             return response.data.sessions;
         } catch (error) {
