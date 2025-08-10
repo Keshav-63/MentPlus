@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthStore } from "./store/authStore";
-import { ToastContainer } from "react-toastify"; // Using react-toastify for consistency
+import { ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css";
 
 // Component Imports
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
-
-// Page Imports (from both old and new projects)
+// Page Imports
 import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import ContactPage from "./pages/ContactPage";
@@ -16,7 +15,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import EmailVerificationPage from "./pages/EmailVerificationPage"; // Using this as the main verification page
+import EmailVerificationPage from "./pages/EmailVerificationPage"; 
 import SubjectSelection from "./pages/SubjectSelection";
 import DomainSelection from "./pages/DomainSelection";
 import MentorTest from "./pages/MentorTest";
@@ -25,9 +24,9 @@ import StudentDashboard from "./pages/StudentDashboard";
 import MentorDashboard from "./pages/MentorDashboard";
 import VideoCallPage from "./pages/VideoCallPage";
 import ChatPage from "./pages/ChatPage";
-import JoyRideTour from "./tour/JoyRideTour"; // Assuming this is a guided tour component
-// --- Route Protection Components ---
+import JoyRideTour from "./tour/JoyRideTour";
 
+// --- Route Protection Components ---
 // Protects routes that require a specific user role (e.g., 'student' or 'mentor')
 const RoleProtectedRoute = ({ children, roles }) => {
   const { isAuthenticated, user } = useAuthStore();

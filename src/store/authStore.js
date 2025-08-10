@@ -417,4 +417,43 @@ export const useAuthStore = create((set, get) => ({
       throw new Error(errorMessage);
     }
   },
+  
+    // --- NEW ACTIONS FOR GROUP SESSION BOOKING ---
+    createGroupSessionOrder: async (sessionId) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await axios.post("http://localhost:5000/api/payments/create-group-order", { sessionId });
+            set({ isLoading: false });
+            return response.data; // Returns { success, order, bookingId }
+        } catch (error) {
+            const msg = error.response?.data?.message || "Error creating group session order";
+            set({ error: msg, isLoading: false }); throw new Error(msg);
+        }
+    },
+
+    verifyGroupSessionPayment: async (paymentData) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await axios.post("http://localhost:5000/api/payments/verify-group-payment", paymentData);
+            set({ isLoading: false });
+            return response.data; // Returns { success, message }
+        } catch (error) {
+            const msg = error.response?.data?.message || "Group payment verification failed";
+            set({ error: msg, isLoading: false }); throw new Error(msg);
+        }
+    },
+
+    // --- NEW ACTION TO FETCH AVAILABLE SESSIONS ---
+    getAvailableGroupSessions: async () => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await axios.get("http://localhost:5000/api/sessions/available-group");
+            set({ isLoading: false });
+            return response.data.sessions;
+        } catch (error) {
+            const msg = error.response?.data?.message || "Error fetching available sessions";
+            set({ error: msg, isLoading: false }); throw new Error(msg);
+        }
+    },
+
 }));
