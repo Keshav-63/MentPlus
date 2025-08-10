@@ -30,17 +30,26 @@ import JoyRideTour from "./tour/JoyRideTour";
 // Protects routes that require a specific user role (e.g., 'student' or 'mentor')
 const RoleProtectedRoute = ({ children, roles }) => {
   const { isAuthenticated, user } = useAuthStore();
+  const navigate = useNavigate();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  useEffect(() => {
+    if (!isAuthenticated || !user?.role) {
+      toast.error("Please login first.");
+      navigate("/login", { replace: true });
+    } else {
+      const allowedRoles = Array.isArray(roles) ? roles : [roles];
+      if (!allowedRoles.includes(user.role)) {
+        toast.error("Access denied.");
+        navigate("/", { replace: true });
+      }
+    }
+  }, [isAuthenticated, user, roles, navigate]);
 
-  // Normalize roles to an array
+  // Prevent rendering children while redirecting
+  if (!isAuthenticated || !user?.role) return null;
+
   const allowedRoles = Array.isArray(roles) ? roles : [roles];
-
-  if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
-  }
+  if (!allowedRoles.includes(user.role)) return null;
 
   return children;
 };

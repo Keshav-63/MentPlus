@@ -5,11 +5,11 @@ import axios from "axios";
 const API_URL =
   import.meta.env.MODE === "development"
     ? "https://mentplus-backend.onrender.com/api/auth"
-    : "/api/auth";
+    : "https://mentplus-backend.onrender.com/api/auth";
 const TEST_API_URL =
   import.meta.env.MODE === "development"
     ? "https://mentplus-backend.onrender.com/api/test"
-    : "/api/test";
+    : "https://mentplus-backend.onrender.com/api/test";
 
 // Set axios to send cookies with every request
 axios.defaults.withCredentials = true;
