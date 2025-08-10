@@ -151,7 +151,11 @@ export const useAuthStore = create((set, get) => ({
     // This ensures the check always runs on app load and sets isCheckingAuth to false.
     set({ isCheckingAuth: true });
     try {
-      const response = await axios.get(`${API_URL}/check-auth`);
+      console.log(`Auth check response: ${API_URL}`);
+      const response = await axios.get(`${API_URL}/check-auth`, {
+        withCredentials: true, // THIS IS IMPORTANT FOR COOKIE TO BE SENT CROSS-ORIGIN
+      });
+
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -266,7 +270,9 @@ export const useAuthStore = create((set, get) => ({
   getExploreData: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.get("https://mentplus-backend.onrender.com/api/explore");
+      const response = await axios.get(
+        "https://mentplus-backend.onrender.com/api/explore"
+      );
       set({ isLoading: false });
       return response.data; // Returns { success, mentors, sessions }
     } catch (error) {
@@ -391,9 +397,12 @@ export const useAuthStore = create((set, get) => ({
       // Example with query param:
       // const response = await axios.get(`https://mentplus-backend.onrender.com/api/chat/token?userID=${userID}`);
       // Or with headers:
-      const response = await axios.get("https://mentplus-backend.onrender.com/api/chat/token", {
-        headers: { userID: userID },
-      });
+      const response = await axios.get(
+        "https://mentplus-backend.onrender.com/api/chat/token",
+        {
+          headers: { userID: userID },
+        }
+      );
       return response.data.token;
     } catch (error) {
       console.error("Error fetching ZIM token:", error);
@@ -417,43 +426,56 @@ export const useAuthStore = create((set, get) => ({
       throw new Error(errorMessage);
     }
   },
-  
-    // --- NEW ACTIONS FOR GROUP SESSION BOOKING ---
-    createGroupSessionOrder: async (sessionId) => {
-        set({ isLoading: true, error: null });
-        try {
-            const response = await axios.post("https://mentplus-backend.onrender.com/api/payments/create-group-order", { sessionId });
-            set({ isLoading: false });
-            return response.data; // Returns { success, order, bookingId }
-        } catch (error) {
-            const msg = error.response?.data?.message || "Error creating group session order";
-            set({ error: msg, isLoading: false }); throw new Error(msg);
-        }
-    },
 
-    verifyGroupSessionPayment: async (paymentData) => {
-        set({ isLoading: true, error: null });
-        try {
-            const response = await axios.post("https://mentplus-backend.onrender.com/api/payments/verify-group-payment", paymentData);
-            set({ isLoading: false });
-            return response.data; // Returns { success, message }
-        } catch (error) {
-            const msg = error.response?.data?.message || "Group payment verification failed";
-            set({ error: msg, isLoading: false }); throw new Error(msg);
-        }
-    },
+  // --- NEW ACTIONS FOR GROUP SESSION BOOKING ---
+  createGroupSessionOrder: async (sessionId) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(
+        "https://mentplus-backend.onrender.com/api/payments/create-group-order",
+        { sessionId }
+      );
+      set({ isLoading: false });
+      return response.data; // Returns { success, order, bookingId }
+    } catch (error) {
+      const msg =
+        error.response?.data?.message || "Error creating group session order";
+      set({ error: msg, isLoading: false });
+      throw new Error(msg);
+    }
+  },
 
-    // --- NEW ACTION TO FETCH AVAILABLE SESSIONS ---
-    getAvailableGroupSessions: async () => {
-        set({ isLoading: true, error: null });
-        try {
-            const response = await axios.get("https://mentplus-backend.onrender.com/api/sessions/available-group");
-            set({ isLoading: false });
-            return response.data.sessions;
-        } catch (error) {
-            const msg = error.response?.data?.message || "Error fetching available sessions";
-            set({ error: msg, isLoading: false }); throw new Error(msg);
-        }
-    },
+  verifyGroupSessionPayment: async (paymentData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(
+        "https://mentplus-backend.onrender.com/api/payments/verify-group-payment",
+        paymentData
+      );
+      set({ isLoading: false });
+      return response.data; // Returns { success, message }
+    } catch (error) {
+      const msg =
+        error.response?.data?.message || "Group payment verification failed";
+      set({ error: msg, isLoading: false });
+      throw new Error(msg);
+    }
+  },
 
+  // --- NEW ACTION TO FETCH AVAILABLE SESSIONS ---
+  getAvailableGroupSessions: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(
+        "https://mentplus-backend.onrender.com/api/sessions/available-group"
+      );
+      set({ isLoading: false });
+      return response.data.sessions;
+    } catch (error) {
+      const msg =
+        error.response?.data?.message || "Error fetching available sessions";
+      set({ error: msg, isLoading: false });
+      throw new Error(msg);
+    }
+  },
 }));
